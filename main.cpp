@@ -19,13 +19,13 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLfloat vertices[] =
-    {
-        -0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,
-         0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,
-         0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f,
-        -0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f,
-         0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f,
-         0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f
+    {   // Coords                                      // Colors
+        -0.5f, -0.5f * float(sqrt(3)) / 3,     0.0f,   0.8f, 0.3f,  0.02f,
+         0.5f, -0.5f * float(sqrt(3)) / 3,     0.0f,   0.8f, 0.3f,  0.02f,
+         0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f,   1.0f, 0.6f,  0.32f,
+        -0.25f, 0.5f * float(sqrt(3)) / 6,     0.0f,   0.9f, 0.45f, 0.17f,
+         0.25f, 0.5f * float(sqrt(3)) / 6,     0.0f,   0.9f, 0.45f, 0.17f,
+         0.0f, -0.5f * float(sqrt(3)) / 3,     0.0f,   0.8f, 0.3f,  0.02f
     };
 
     GLuint indices[] =
@@ -65,23 +65,29 @@ int main()
     // Generates Element Buffer Object and links it to indices
     EBO ebo(indices, sizeof(indices));
 
-    // Links VBO to VAO
-    vao.LinkVBO(vbo, 0);
+    // Links VBO attributes (coords/colors) to VAO
+    vao.LinkAttrib(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
+    vao.LinkAttrib(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     // Unbind all to prevent accidentally modifying
     vao.Unbind();
     vbo.Unbind();
     ebo.Unbind();
 
+    // Get ID of uniform called "scale"
+    GLuint scaleID = glGetUniformLocation(shader_program.ID, "scale");
+
+    // Tell OpenGL which Shader Program we want to use
+    shader_program.Activate();
+    // Assign a value to uniform "scale": MUST be done after Activate of shader program
+    glUniform1f(scaleID, 0.5f);
+
+    // Bind Vertex Array Object
+    vao.Bind();
+
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.99f, 0.99f, 0.99f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        // Tell OpenGL which Shader Program we want to use
-        shader_program.Activate();
-
-        // Bind Vertex Array Object
-        vao.Bind();
 
         //glDrawArrays(GL_TRIANGLES, 0, 3);
         glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
@@ -95,6 +101,8 @@ int main()
     vao.Delete();
     vbo.Delete();
     ebo.Delete();
+
+    shader_program.Delete();
 
     // Delete window
     glfwDestroyWindow(window);
