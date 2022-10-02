@@ -13,13 +13,56 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы ресурсов\Shaders">
+      <UniqueIdentifier>{6c279df4-3011-4aa1-a507-1b26318e8b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\OpenGL">
+      <UniqueIdentifier>{f5c51069-f7db-4d25-a692-10a41d473999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\OpenGL">
+      <UniqueIdentifier>{83093814-e61e-43b2-a2a8-0256ecb8dcfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="EBO.cpp">
+      <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderClass.cpp">
+      <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="VBO.cpp">
+      <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="VAO.cpp">
+      <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="default.vert">
+      <Filter>Файлы ресурсов\Shaders</Filter>
+    </None>
+    <None Include="default.frag">
+      <Filter>Файлы ресурсов\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EBO.h">
+      <Filter>Файлы заголовков\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderClass.h">
+      <Filter>Файлы заголовков\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="VAO.h">
+      <Filter>Файлы заголовков\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="VBO.h">
+      <Filter>Файлы заголовков\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
