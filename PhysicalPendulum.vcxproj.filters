@@ -22,6 +22,12 @@
     <Filter Include="Файлы заголовков\OpenGL">
       <UniqueIdentifier>{83093814-e61e-43b2-a2a8-0256ecb8dcfb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Pendulum">
+      <UniqueIdentifier>{7cdffc34-93c0-47f6-9eee-d7388d65df68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Pendulum">
+      <UniqueIdentifier>{740005b1-116e-4130-95b4-53b5a2e07e45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -41,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="VAO.cpp">
       <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Pendulum.cpp">
+      <Filter>Исходные файлы\Pendulum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +72,9 @@
     </ClInclude>
     <ClInclude Include="VBO.h">
       <Filter>Файлы заголовков\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Pendulum.h">
+      <Filter>Файлы заголовков\Pendulum</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
