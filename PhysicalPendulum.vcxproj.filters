@@ -28,6 +28,12 @@
     <Filter Include="Файлы заголовков\Pendulum">
       <UniqueIdentifier>{740005b1-116e-4130-95b4-53b5a2e07e45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Solver">
+      <UniqueIdentifier>{0655b998-7fb9-4e6b-a6b4-fe7e6cf50e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Solver">
+      <UniqueIdentifier>{dcfb97a6-7fe0-4a40-948f-e3408e6c82e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -50,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="Pendulum.cpp">
       <Filter>Исходные файлы\Pendulum</Filter>
+    </ClCompile>
+    <ClCompile Include="Solver.cpp">
+      <Filter>Исходные файлы\Solver</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +84,9 @@
     </ClInclude>
     <ClInclude Include="Pendulum.h">
       <Filter>Файлы заголовков\Pendulum</Filter>
+    </ClInclude>
+    <ClInclude Include="Solver.h">
+      <Filter>Файлы заголовков\Solver</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

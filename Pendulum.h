@@ -73,6 +73,10 @@ protected:
     VBO vbo;
     EBO edge_ebo;
     EBO surface_ebo;
-};
 
-//void calculateRungeKutta();
+private:
+    void calculateDerivates(const float* y_in, float* derivates);
+    void updateCoordinates();
+
+    //void solveODEsRK4(const float* y_in, float* y_out, const unsigned int size, float step);
+};

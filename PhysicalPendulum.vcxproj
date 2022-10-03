@@ -142,6 +142,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pendulum.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
+    <ClCompile Include="Solver.cpp" />
     <ClCompile Include="VAO.cpp" />
     <ClCompile Include="VBO.cpp" />
   </ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="EBO.h" />
     <ClInclude Include="Pendulum.h" />
     <ClInclude Include="ShaderClass.h" />
+    <ClInclude Include="Solver.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
   </ItemGroup>
