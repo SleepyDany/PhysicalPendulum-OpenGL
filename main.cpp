@@ -41,7 +41,7 @@ int main()
     // Creates shader object using shaders default.vert and default.frag
     Shader shader_program("default.vert", "default.frag");
 
-    Pendulum pendulum(new float[2] {1, 1}, new float[2] {0.4f, 0.4f}, new float[2] {M_PI / 2, M_PI / 2});
+    Pendulum pendulum(new float[2] {1, 1}, new float[2] {0.4f, 0.4f}, new float[2] {M_PI / 2, M_PI / 2}, new float[2] {0.0f, 0.0f});
     pendulum.calculateDrawVertices();
     pendulum.createBuffers();
 

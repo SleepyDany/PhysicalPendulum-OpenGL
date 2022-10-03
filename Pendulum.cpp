@@ -1,7 +1,7 @@
 #include "Pendulum.h"
 #include <glad/glad.h>
 
-Pendulum::Pendulum(float* mass_beams, float* l_beams, float* theta_beams, unsigned int num_beams) :
+Pendulum::Pendulum(float* mass_beams, float* l_beams, float* theta_beams, float* omega_beams, unsigned int num_beams) :
     vbo(vertices, countDrawVertices() * sizeof(GLfloat)),
     edge_ebo(edge_indices, countEdgeIndices() * sizeof(GLuint)),
     surface_ebo(surface_indices, countSurfaceIndices() * sizeof(GLuint))
@@ -14,7 +14,7 @@ Pendulum::Pendulum(float* mass_beams, float* l_beams, float* theta_beams, unsign
 
     for (int i = 0; i < num_beams; ++i)
     {
-        beams.emplace_back(mass_beams[i], l_beams[i], theta_beams[i]);
+        beams.emplace_back(mass_beams[i], l_beams[i], theta_beams[i], omega_beams[i]);
 
         if (i != 0)
         {
@@ -53,6 +53,11 @@ Pendulum::~Pendulum()
 
 void Pendulum::calculatePhysicalModel(float step)
 {
+    if (step < 0)
+        return;
+
+    step = std::min(step, 1.0f / 25);
+
 
 }
 
