@@ -12,13 +12,14 @@
 
 struct Beam
 {
-    Beam(float p_mass = 1.0f, float p_l = 1.0f, float p_theta = M_PI / 2) :
+    Beam(float p_mass = 1.0f, float p_l = 1.0f, float p_theta = M_PI / 2, float p_omega = 0.0f) :
         x(0.0f),
         y(0.0f),
         z(0.0f),
         mass(p_mass),
         l(p_l),
-        theta(p_theta)
+        theta(p_theta),
+        omega(p_omega)
     {
         x = l * sin(theta) / 2;
         y = -l * cos(theta) / 2;
@@ -31,12 +32,13 @@ struct Beam
     float mass;
     float l;
     float theta;
+    float omega;
 };
 
 class Pendulum
 {
 public:
-    Pendulum(float* mass_beams, float* l_beams, float* theta_beams, unsigned int num_beams = 2);
+    Pendulum(float* mass_beams, float* l_beams, float* theta_beams, float* omega_beams, unsigned int num_beams = 2);
     ~Pendulum();
 
     void calculatePhysicalModel(float step);
