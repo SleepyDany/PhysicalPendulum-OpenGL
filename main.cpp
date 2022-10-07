@@ -42,7 +42,6 @@ int main()
     Shader shader_program("default.vert", "default.frag");
 
     float mass[2] = { 0.6f, 0.6f }, l[2] = { 0.4f, 0.4f }, theta[2] = { M_PI / 2, M_PI / 2 }, w[2] = { 0.0f, 0.0f };
-
     DoublePendulum pendulum(mass, l, theta, w);
     pendulum.calculateDrawVertices();
     pendulum.createBuffers();
@@ -69,7 +68,7 @@ int main()
 
         pendulum.calculatePhysicalModel(1.0 / 60);
         pendulum.draw(shader_program.ID);
-
+        
          glfwSwapBuffers(window);
 
         // All GLFW Events

@@ -211,6 +211,7 @@ void DoublePendulum::calculatePhysicalModel(float step)
     }
 
     updateCoordinates();
+
     calculateDrawVertices();
 }
 

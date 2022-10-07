@@ -42,51 +42,51 @@
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="EBO.cpp">
-      <Filter>Исходные файлы\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderClass.cpp">
-      <Filter>Исходные файлы\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="VBO.cpp">
-      <Filter>Исходные файлы\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="VAO.cpp">
-      <Filter>Исходные файлы\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="Pendulum.cpp">
-      <Filter>Исходные файлы\Pendulum</Filter>
-    </ClCompile>
-    <ClCompile Include="Solver.cpp">
+    <ClCompile Include="Solver\Solver.cpp">
       <Filter>Исходные файлы\Solver</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGL\EBO.cpp">
+      <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\ShaderClass.cpp">
+      <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\VAO.cpp">
+      <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\VBO.cpp">
+      <Filter>Исходные файлы\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Pendulum\Pendulum.cpp">
+      <Filter>Исходные файлы\Pendulum</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.vert">
-      <Filter>Файлы ресурсов\Shaders</Filter>
-    </None>
-    <None Include="default.frag">
-      <Filter>Файлы ресурсов\Shaders</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="EBO.h">
+    <ClInclude Include="OpenGL\EBO.h">
       <Filter>Файлы заголовков\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderClass.h">
+    <ClInclude Include="OpenGL\ShaderClass.h">
       <Filter>Файлы заголовков\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="VAO.h">
+    <ClInclude Include="OpenGL\VAO.h">
       <Filter>Файлы заголовков\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="VBO.h">
+    <ClInclude Include="OpenGL\VBO.h">
       <Filter>Файлы заголовков\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Pendulum.h">
+    <ClInclude Include="Pendulum\Pendulum.h">
       <Filter>Файлы заголовков\Pendulum</Filter>
     </ClInclude>
-    <ClInclude Include="Solver.h">
+    <ClInclude Include="Solver\Solver.h">
       <Filter>Файлы заголовков\Solver</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\default.frag">
+      <Filter>Файлы ресурсов\Shaders</Filter>
+    </None>
+    <None Include="Resources\default.vert">
+      <Filter>Файлы ресурсов\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

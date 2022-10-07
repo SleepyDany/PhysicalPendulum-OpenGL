@@ -137,26 +137,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EBO.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Pendulum.cpp" />
-    <ClCompile Include="ShaderClass.cpp" />
-    <ClCompile Include="Solver.cpp" />
-    <ClCompile Include="VAO.cpp" />
-    <ClCompile Include="VBO.cpp" />
+    <ClCompile Include="OpenGL\EBO.cpp" />
+    <ClCompile Include="OpenGL\ShaderClass.cpp" />
+    <ClCompile Include="OpenGL\VAO.cpp" />
+    <ClCompile Include="OpenGL\VBO.cpp" />
+    <ClCompile Include="Pendulum\Pendulum.cpp" />
+    <ClCompile Include="Solver\Solver.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag" />
-    <None Include="default.vert" />
+    <ClInclude Include="OpenGL\EBO.h" />
+    <ClInclude Include="OpenGL\ShaderClass.h" />
+    <ClInclude Include="OpenGL\VAO.h" />
+    <ClInclude Include="OpenGL\VBO.h" />
+    <ClInclude Include="Pendulum\Pendulum.h" />
+    <ClInclude Include="Solver\Solver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EBO.h" />
-    <ClInclude Include="Pendulum.h" />
-    <ClInclude Include="ShaderClass.h" />
-    <ClInclude Include="Solver.h" />
-    <ClInclude Include="VAO.h" />
-    <ClInclude Include="VBO.h" />
+    <None Include="Resources\default.frag" />
+    <None Include="Resources\default.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
