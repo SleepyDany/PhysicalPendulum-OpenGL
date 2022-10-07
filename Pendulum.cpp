@@ -1,5 +1,4 @@
 #include "Pendulum.h"
-#include <glad/glad.h>
 
 #include "Solver.h"
 
@@ -173,8 +172,11 @@ void DoublePendulum::calculateDerivates(const float* y_in, float* derivates)
 
 void DoublePendulum::calculatePhysicalModel(float step)
 {
-    if (step < 0)
+    if (step <= 0)
+    {
+        std::cout << "Uncorrect step for calculations." << std::endl;
         return;
+    }
 
     const unsigned int size = 4;
     
@@ -199,6 +201,17 @@ void DoublePendulum::calculatePhysicalModel(float step)
     solver->setStep(step);
 
     solver->SolveRK4(y_in, func, y_out, size);
+
+    //solveODEsRK4(y_in, y_out, size, step);
+
+    for (int i = 0; i < countBeams(); ++i)
+    {
+        beams[i].theta = y_out[2 * i] - floor(y_out[2 * i] / (2 * M_PI)) * 2 * M_PI; // Round theta in [0; 2*PI]
+        beams[i].omega = y_out[2 * i + 1];
+    }
+
+    updateCoordinates();
+    calculateDrawVertices();
 }
 
 void vec_summ(float* result, const float* vec1, const float* vec2, unsigned int size)

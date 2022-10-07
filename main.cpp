@@ -51,9 +51,19 @@ int main()
 
     // Tell OpenGL which Shader Program we want to use
     shader_program.Activate();
+    double last_time = glfwGetTime();
+    double cur_time = last_time;
 
     while (!glfwWindowShouldClose(window))
     {
+        cur_time = glfwGetTime();
+        if (cur_time - last_time <= 1.0 / 60)
+            continue;
+        else
+        {
+            last_time = cur_time;
+        }
+
         glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
