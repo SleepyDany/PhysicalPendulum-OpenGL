@@ -2,11 +2,10 @@
 
 #include "Solver.h"
 
-Pendulum::Pendulum(float* mass_beams, float* l_beams, float* theta_beams, float* omega_beams, unsigned int num_beams) :
-    vbo(vertices, countDrawVertices() * sizeof(GLfloat)),
-    edge_ebo(edge_indices, countEdgeIndices() * sizeof(GLuint)),
-    surface_ebo(surface_indices, countSurfaceIndices() * sizeof(GLuint))
+DoublePendulum::DoublePendulum(float* mass_beams, float* l_beams, float* theta_beams, float* omega_beams)
 {
+    const int num_beams = 2;
+
     vertices = new GLfloat[num_beams * 4 * 3] {};
     edge_indices = new GLuint[num_beams * 4] {};
     surface_indices = new GLuint[num_beams * 3 * 2] {};
@@ -38,7 +37,7 @@ Pendulum::Pendulum(float* mass_beams, float* l_beams, float* theta_beams, float*
     }
 }
 
-Pendulum::~Pendulum()
+DoublePendulum::~DoublePendulum()
 {
     beams.clear();
 
@@ -52,7 +51,7 @@ Pendulum::~Pendulum()
     surface_indices = nullptr;
 }
 
-void Pendulum::updateCoordinates()
+void DoublePendulum::updateCoordinates()
 {
     for (int i = 0; i < countBeams(); ++i)
     {
@@ -67,7 +66,7 @@ void Pendulum::updateCoordinates()
     }
 }
 
-void Pendulum::calculateDerivates(const float* y_in, float* derivates)
+void DoublePendulum::calculateDerivates(const float* y_in, float* derivates)
 {
     // y_in
     // 0 - theta 1
@@ -84,22 +83,36 @@ void Pendulum::calculateDerivates(const float* y_in, float* derivates)
     const float M = m1 + m2;
     
     const float delta = theta2 - theta1;
+    //const float delta = theta1 - theta2;
     float den = M * l1 - m2 * l1 * cos(delta) * cos(delta);
+    //float den = l1 * (9 * m2 * pow(cos(delta), 2) - 4 * m1 - 12 * m2);
 
     derivates[0] = w1;
     derivates[1] = (m1 * l1 * pow(w1, 2) * sin(delta) * cos(delta) +
                     m2 * g * sin(theta2) * cos(delta) + 
                     m2 * l2 * pow(w2, 2) * sin(delta) -
                     M * g * sin(theta1)) / den;
+   /* derivates[1] = 3 * (-3 * sin(delta) * cos(delta) * l1 * m2 * pow(w1,2) -
+                        -2 * pow(w2,2) * m2 * l2 * sin(delta) -
+                        -3 * sin(theta2) * cos(delta) * g * m2 +
+                         2 * g * sin(theta1) * m1 +
+                         4 * g * sin(theta1) * m2) / den;*/
     derivates[2] = w2;
     den *= l2 / l1;
     derivates[3] = (-m2 * l2 * pow(w2, 2) * sin(delta) * cos(delta) +
                     M * g * sin(theta1) * cos(delta) -
                     M * l1 * pow(w1, 2) * sin(delta) -
                     M * g * sin(theta2)) / den;
+    /*derivates[3] = 3 * (-3 * sin(delta) * cos(delta) * l2 * m2 * pow(w2,2) -
+                        -2 * sin(delta) * l1 * m1 * pow(w1,2) -
+                        -6 * sin(delta) * l1 * m2 * pow(w1,2) +
+                         3 * sin(theta1) * cos(delta) * g * m1 +
+                         6 * sin(theta1) * cos(delta) * g * m2 - 
+                        -2 * sin(theta2) * g * m1 -
+                        -6 * sin(theta2) * g * m2) / den;*/
 }
 
-//void Pendulum::solveODEsRK4(const float* y_in, float* y_out, const unsigned int size, float step)
+//void DoublePendulum::solveODEsRK4(const float* y_in, float* y_out, const unsigned int size, float step)
 //{
 //    float* derivates = new float[size] {};
 //    float* y_temp = new float[size] {};
@@ -157,7 +170,7 @@ void Pendulum::calculateDerivates(const float* y_in, float* derivates)
 //    k = nullptr;
 //}
 
-void Pendulum::calculatePhysicalModel(float step)
+void DoublePendulum::calculatePhysicalModel(float step)
 {
     if (step <= 0)
     {
@@ -181,7 +194,7 @@ void Pendulum::calculatePhysicalModel(float step)
         y_in[2 * i + 1] = beams[i].omega;
     }
 
-    std::function<void(const float*, float*)> func = std::bind(&Pendulum::calculateDerivates, this, std::placeholders::_1, std::placeholders::_2);
+    std::function<void(const float*, float*)> func = std::bind(&DoublePendulum::calculateDerivates, this, std::placeholders::_1, std::placeholders::_2);
 
     SolverODEs* solver = new SolverODEs();
     solver->setMethod(SolverODEs::RungeKutta4);
@@ -202,21 +215,27 @@ void Pendulum::calculatePhysicalModel(float step)
     calculateDrawVertices();
 }
 
-void Pendulum::calculateDrawVertices()
+void vec_summ(float* result, const float* vec1, const float* vec2, unsigned int size)
+{
+    if (!vec1 || !vec2 || !result)
+        return;
+
+    for (unsigned int i = 0; i < size; ++i)
+        result[i] = vec1[i] + vec2[i];
+};
+
+void vec_subtract(float* result, const float* vec1, const float* vec2, unsigned int size)
+{
+    if (!vec1 || !vec2 || !result)
+        return;
+
+    for (unsigned int i = 0; i < size; ++i)
+        result[i] = vec1[i] - vec2[i];
+};
+
+void DoublePendulum::calculateDrawVertices()
 {
     float width = 0.02f;
-
-    auto vec_summ = [](float* result, float* vec1, float* vec2)
-    { 
-        result[0] = vec1[0] + vec2[0];
-        result[1] = vec1[1] + vec2[1];
-    };
-
-    auto vec_subtract = [](float* result, float* vec1, float* vec2)
-    {
-        result[0] = vec1[0] - vec2[0];
-        result[1] = vec1[1] - vec2[1];
-    };
 
     float L[2] = {};
     float W[2] = {};
@@ -237,34 +256,34 @@ void Pendulum::calculateDrawVertices()
 
         float temp_vec[2]{};
 
-        vec_summ(temp_vec, L, W);
-        vec_summ(vertices + offset, center, temp_vec);
+        vec_summ(temp_vec, L, W, 2);
+        vec_summ(vertices + offset, center, temp_vec, 2);
         offset += 3;
 
-        vec_subtract(temp_vec, L, W);
-        vec_summ(vertices + offset, center, temp_vec);
+        vec_subtract(temp_vec, L, W, 2);
+        vec_summ(vertices + offset, center, temp_vec, 2);
         offset += 3;
 
         L[0] *= -1; L[1] *= -1;
-        vec_subtract(temp_vec, L, W);
-        vec_summ(vertices + offset, center, temp_vec);
+        vec_subtract(temp_vec, L, W, 2);
+        vec_summ(vertices + offset, center, temp_vec, 2);
         offset += 3;
 
-        vec_summ(temp_vec, W, L);
-        vec_summ(vertices + offset, center, temp_vec);
+        vec_summ(temp_vec, W, L, 2);
+        vec_summ(vertices + offset, center, temp_vec, 2);
         offset += 3;
     }
 }
 
-void Pendulum::createBuffers()
+void DoublePendulum::createBuffers()
 {
     vao.Bind();
 
-    vbo = VBO(vertices, countDrawVertices() * sizeof(GLfloat));
+    vbo.uploadBufferData(vertices, countDrawVertices() * sizeof(GLfloat));
     vbo.Bind();
 
-    edge_ebo = EBO(edge_indices, countEdgeIndices() * sizeof(GLuint)),
-    surface_ebo = EBO(surface_indices, countSurfaceIndices() * sizeof(GLuint));
+    edge_ebo.uploadBufferData(edge_indices, countEdgeIndices() * sizeof(GLuint)),
+    surface_ebo.uploadBufferData(surface_indices, countSurfaceIndices() * sizeof(GLuint));
 
     vao.LinkAttrib(vbo, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
 
@@ -274,7 +293,7 @@ void Pendulum::createBuffers()
     surface_ebo.Unbind();
 }
 
-void Pendulum::deleteBuffers()
+void DoublePendulum::deleteBuffers()
 {
     vao.Delete();
     vbo.Delete();
@@ -282,7 +301,7 @@ void Pendulum::deleteBuffers()
     surface_ebo.Delete();
 }
 
-void Pendulum::drawEdges()
+void DoublePendulum::drawEdges()
 {
     vao.Bind();
     edge_ebo.Bind();
@@ -296,7 +315,7 @@ void Pendulum::drawEdges()
     vao.Unbind();
 }
 
-void Pendulum::drawSurface()
+void DoublePendulum::drawSurface()
 {
     vao.Bind();
     surface_ebo.Bind();
@@ -305,4 +324,16 @@ void Pendulum::drawSurface()
 
     surface_ebo.Unbind();
     vao.Unbind();
+}
+
+void DoublePendulum::draw(GLuint program_id)
+{
+    createBuffers();
+
+    GLuint uColorID = glGetUniformLocation(program_id, "uColor");
+    glUniform3f(uColorID, 1.0f, 0.0f, 0.0f);
+    drawSurface();
+
+    glUniform3f(uColorID, 153.f / 255.f, 0.0f, 0.0f);
+    drawEdges();
 }

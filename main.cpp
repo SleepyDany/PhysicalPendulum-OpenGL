@@ -43,7 +43,7 @@ int main()
 
     float mass[2] = { 0.6f, 0.6f }, l[2] = { 0.4f, 0.4f }, theta[2] = { M_PI / 2, M_PI / 2 }, w[2] = { 0.0f, 0.0f };
 
-    Pendulum pendulum(mass, l, theta, w);
+    DoublePendulum pendulum(mass, l, theta, w);
     pendulum.calculateDrawVertices();
     pendulum.createBuffers();
 
@@ -68,13 +68,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         pendulum.calculatePhysicalModel(1.0 / 60);
-        pendulum.createBuffers();
-
-        glUniform3f(uColorID, 1.0f, 0.0f, 0.0f);
-        pendulum.drawSurface();
-
-        glUniform3f(uColorID, 153.f / 255.f, 0.0f, 0.0f);
-        pendulum.drawEdges();
+        pendulum.draw(shader_program.ID);
 
          glfwSwapBuffers(window);
 

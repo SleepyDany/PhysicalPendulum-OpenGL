@@ -35,11 +35,11 @@ struct Beam
     float omega;
 };
 
-class Pendulum
+class DoublePendulum
 {
 public:
-    Pendulum(float* mass_beams, float* l_beams, float* theta_beams, float* omega_beams, unsigned int num_beams = 2);
-    ~Pendulum();
+    DoublePendulum(float* mass_beams, float* l_beams, float* theta_beams, float* omega_beams);
+    ~DoublePendulum();
 
     void calculatePhysicalModel(float step);
 
@@ -57,6 +57,8 @@ public:
 
     void createBuffers();
     void deleteBuffers();
+
+    void draw(GLuint program_id);
 
     void drawEdges();
     void drawSurface();
@@ -77,6 +79,4 @@ protected:
 private:
     void calculateDerivates(const float* y_in, float* derivates);
     void updateCoordinates();
-
-    //void solveODEsRK4(const float* y_in, float* y_out, const unsigned int size, float step);
 };
