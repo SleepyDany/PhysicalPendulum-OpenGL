@@ -41,7 +41,9 @@ int main()
     // Creates shader object using shaders default.vert and default.frag
     Shader shader_program("default.vert", "default.frag");
 
-    Pendulum pendulum(new float[2] {1, 1}, new float[2] {0.4f, 0.4f}, new float[2] {M_PI / 2, M_PI / 2}, new float[2] {0.0f, 0.0f});
+    float mass[2] = { 0.6f, 0.6f }, l[2] = { 0.4f, 0.4f }, theta[2] = { M_PI / 2, M_PI / 2 }, w[2] = { 0.0f, 0.0f };
+
+    DoublePendulum pendulum(mass, l, theta, w);
     pendulum.calculateDrawVertices();
     pendulum.createBuffers();
 
@@ -55,11 +57,8 @@ int main()
         glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUniform3f(uColorID, 1.0f, 0.0f, 0.0f);
-        pendulum.drawSurface();
-
-        glUniform3f(uColorID, 153.f / 255.f, 0.0f, 0.0f);
-        pendulum.drawEdges();
+        pendulum.calculatePhysicalModel(1.0 / 60);
+        pendulum.draw(shader_program.ID);
 
          glfwSwapBuffers(window);
 
